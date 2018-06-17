@@ -13,13 +13,6 @@ export default class MyHeader extends Component{
       <View>
         <Header
           centerComponent={{ text: 'Water Flow', style: { color: '#fff' } }}
-          rightComponent={
-            <Icon
-              name='sync'
-              color='#fff'
-              onPress={() => {console.log('hello')}} 
-              />
-            }
         />
       </View>
     )
