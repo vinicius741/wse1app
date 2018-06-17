@@ -1,14 +1,19 @@
 from sqlalchemy import create_engine
 from time import sleep
 from threading import Thread
+from ConnetionUDP import ConnetionUDP
 
 # Conexão com a base de dados SQLite
 db_connect = create_engine('sqlite:///chinook.db')
 
+conn = ConnetionUDP(555)
+
 # Recebe os dados enviados pelo NodeMCU
 def receiveFromMCU():
     
-    while True
+    while True:
+        
+        print (conn.ReciveData())
 
         # Receber leitura do NodeMCU
         # Armazenar na base de dados SQLite
@@ -18,8 +23,8 @@ def receiveFromMCU():
 # Processa e envia os dados para o Firebase
 def sendToFirebase():
 
-    while True
-
+    while True:
+        sleep(1)
         # Ler base de dados SQLite
         # Tirar a média de consumo do último minuto
         # Determinar se o fluxo é alto, médio ou nenhum
