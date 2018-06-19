@@ -1,36 +1,66 @@
 import React, { Component } from 'react'
 import {AppRegistry, View,Text, StyleSheet} from 'react-native'
-import { Scatterplot,SmoothLine,StockLine, Bar } from 'react-native-pathjs-charts'
+import { StockLine } from 'react-native-pathjs-charts'
+import TimerMixin from 'react-timer-mixin';
 
 
 export default class Chart extends Component{
-  constructor(props){
-    super(props);
-    this.props.Lista
-    this.props.Lista.reverse()
+  static navigationOptions = ({ navigation }) => ({
+    title: `StockLine - Dynamic Labels`,
+  });
+  constructor(props) {
+    super(props)
+    this.state = { data: [
+      [
+        {
+          "date": 0,
+          "value": 4.731333333333334
+        }
+      ]
+    ] }
 
-    if(this.props.Lista.length >= 4){
-      this.props.Lista = this.props.Lista.slice(0,3)
-    }
-  }
-  render() {
     
+    fetch('https://workshop-c1d2d.firebaseio.com/.json')
+    .then((response) => response.json())
+    .then((responseJson) => {
+        
+      this.state.data[0].pop()
+      let i = 0
+      for (var key in responseJson) {
+
+        if (responseJson.hasOwnProperty(key)) {
+            this.state.data[0].push({ "value": responseJson[key].value, "date": i })
+            i++
+        }
+      }
+      this.state.data[0].reverse()
+
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  }
+
   
-    let options = {
-      width: 300,
-      height: 300,
-      margin: {
-        top: 20,
-        left: 25,
-        bottom: 50,
-        right: 20
-      },
+  
+  render() {
+
+    
+
+      
+    const options = {
+      width: 250,
+      height: 250,
       color: '#2980B9',
-      gutter: 20,
+      margin: {
+        top: 10,
+        left: 35,
+        bottom: 30,
+        right: 10
+      },
       animate: {
-        type: 'oneByOne',
-        duration: 200,
-        fillTransition: 3
+        type: 'delayed',
+        duration: 200
       },
       axisX: {
         showAxis: true,
@@ -39,6 +69,14 @@ export default class Chart extends Component{
         showTicks: true,
         zeroAxis: false,
         orient: 'bottom',
+        tickValues: [],
+        // labelFunction: ((v) => {
+        //   let d = v.split('_')
+        //   let ds = d[0].split('-')
+        //   let hs = d[1]
+
+        //   return `${ds[2]}/${ds[1]}/${ds[0]} ${hs}`
+        // }),
         label: {
           fontFamily: 'Arial',
           fontSize: 8,
@@ -53,6 +91,7 @@ export default class Chart extends Component{
         showTicks: true,
         zeroAxis: false,
         orient: 'left',
+        tickValues: [],
         label: {
           fontFamily: 'Arial',
           fontSize: 8,
@@ -60,20 +99,26 @@ export default class Chart extends Component{
           fill: '#34495E'
         }
       }
-    }
-  
+    };
+    
     return (
-      <View>
-        <Bar data={this.props.List} options={options} accessorKey='v'/>
-        
+      <View style={styles.container}>
+        <StockLine 
+        data={this.state.data} 
+        options={options} 
+        xKey='date' 
+        yKey='value' />
       </View>
-    )
+    );
   }
 }
-
-
+  
 const styles = StyleSheet.create({
- 
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f7f7f7',
+  },
 });
 
 AppRegistry.registerComponent('WorkShopApp', () => Chart)

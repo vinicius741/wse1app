@@ -13,6 +13,8 @@ import { ListItem, Icon } from 'react-native-elements';
 
 import Chart from './Chart'
 
+
+
 export default class ListAPITest extends Component {
   constructor(props) {
     super(props)
@@ -116,7 +118,7 @@ export default class ListAPITest extends Component {
 
       <TouchableOpacity onPress = { this._onPress } >
         <ListItem 
-          title = { item.value.toFixed(2).toString() }
+          title = { item.value.toFixed(2).toString() + " L/m" }
           subtitle = { this.formateDate(item.date) }
           keyExtractor={this._keyExtractor}
           leftIcon = {
@@ -142,7 +144,9 @@ export default class ListAPITest extends Component {
             />
           }>
           <View style={{flex:1}}>
-            {/* <Chart Lista = {this.state.listChart.bind(this)}/> */}
+            {/* <Chart style = {styles.chartstyle}
+              dados = {this.state.dataSource}
+            /> */}
             <FlatList
               data = { this.state.dataSource }
               renderItem = { renderItem }
@@ -161,6 +165,9 @@ const styles = StyleSheet.create({
   sizecontrol: {
     width: 50, 
     height: 90
+  },
+  chartstyle: {
+    justifyContent: 'center'
   }
 });
 
