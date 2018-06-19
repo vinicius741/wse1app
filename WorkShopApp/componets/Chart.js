@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import {AppRegistry, View,Text, StyleSheet} from 'react-native'
 import { StockLine } from 'react-native-pathjs-charts'
-import TimerMixin from 'react-timer-mixin';
 
 
 export default class Chart extends Component{

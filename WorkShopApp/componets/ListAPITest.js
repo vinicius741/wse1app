@@ -145,7 +145,6 @@ export default class ListAPITest extends Component {
           }>
           <View style={{flex:1}}>
             {/* <Chart style = {styles.chartstyle}
-              dados = {this.state.dataSource}
             /> */}
             <FlatList
               data = { this.state.dataSource }
