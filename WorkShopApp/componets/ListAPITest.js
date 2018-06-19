@@ -150,7 +150,7 @@ export default class ListAPITest extends Component {
             />
           </View>
           
-
+          <View style={styles.sizecontrol}></View>
         </ScrollView>
       </View>
     )
@@ -158,7 +158,10 @@ export default class ListAPITest extends Component {
   }
 }
 const styles = StyleSheet.create({
- 
+  sizecontrol: {
+    width: 50, 
+    height: 90
+  }
 });
 
 AppRegistry.registerComponent('WorkShopApp', () => ListAPITest)
