@@ -11,23 +11,27 @@ import { TouchableOpacity,
 
 import { ListItem, Icon } from 'react-native-elements';
 
-
+import Chart from './Chart'
 
 export default class ListAPITest extends Component {
   constructor(props) {
     super(props)
     this.state = { isLoading: true }
     this.state = { refreshing: false };
+    this.state = { listChart: [] }
   }
   componentDidMount() {
     return fetch('https://workshop-c1d2d.firebaseio.com/.json')
       .then((response) => response.json())
       .then((responseJson) => {
         let list = [ ]
+        
+
         for (var key in responseJson) {
 
           if (responseJson.hasOwnProperty(key)) {
               list.push(responseJson[key]);
+              this.state.listChart.push({ "v": responseJson[key].value, "name": responseJson[key].date })
           }
         }
         list.reverse()
@@ -128,17 +132,25 @@ export default class ListAPITest extends Component {
 
     return(
       <View>
-        <ScrollView>
-          <FlatList
-            data = { this.state.dataSource }
-            renderItem = { renderItem }
-            refreshControl={
-              <RefreshControl
-                refreshing={this.state.refreshing}
-                onRefresh={this._onRefresh.bind(this)}
-              />
-            }
-          />
+
+        <ScrollView
+          
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this._onRefresh.bind(this)}
+            />
+          }>
+          <View style={{flex:1}}>
+            {/* <Chart Lista = {this.state.listChart.bind(this)}/> */}
+            <FlatList
+              data = { this.state.dataSource }
+              renderItem = { renderItem }
+              
+            />
+          </View>
+          
+
         </ScrollView>
       </View>
     )
